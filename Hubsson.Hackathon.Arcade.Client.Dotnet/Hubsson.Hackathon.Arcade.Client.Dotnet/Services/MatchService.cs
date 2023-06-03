@@ -53,13 +53,24 @@ namespace Hubsson.Hackathon.Arcade.Client.Dotnet.Services
         private static List<string> RemoveWhereOccupied(int x, int y, bool[,] grid, int MapWidth, int MapHeight, List<string> validDirections)
         {
             if (x > 0 && grid[x - 1, y] && validDirections.Any(d => d == "Right")) { }
-            validDirections.Remove("Right"); // can't go left
+            
+                validDirections.Remove("Right"); // can't go left
+            
             if (x < MapWidth -1 && grid[x + 1, y] && validDirections.Any(d => d == "Left"))
+            
                 validDirections.Remove("Left"); // can't go right
+            
+                
             if (y > 0 && grid[x, y - 1] && validDirections.Any(d => d == "Up"))
+            
                 validDirections.Remove("Up"); // can't go up
+            
+                
             if (y < MapHeight -1 && grid[x, y + 1] && validDirections.Any(d => d == "Down"))
+            
                 validDirections.Remove("Down"); // can't go down
+            
+                
 
            // _logger.LogInformation("here: {0} {1} {2}", x.ToString(), y.ToString(), string.Join(",",validDirections));
             return validDirections;
@@ -104,7 +115,7 @@ namespace Hubsson.Hackathon.Arcade.Client.Dotnet.Services
                     {
                         int currentX = gameState.players[i].coordinates[lengthCoordinate - 1].x;
                         int currentY = gameState.players[i].coordinates[lengthCoordinate - 1].y;
-                        grid[currentX,currentY] = true;
+
                         double d = DistanceBetweenPlayer(ourCurrentX, ourCurrentY, currentX, currentY);
                         allDistance[playerID] = d;
                         //_logger.LogInformation("distance between {0} and us is {1}", playerID, d.ToString());
@@ -117,7 +128,6 @@ namespace Hubsson.Hackathon.Arcade.Client.Dotnet.Services
             var validDirections = RemoveWhereOccupied(ourCurrentX,ourCurrentY, grid, MapWidth, MapHeight, directions);
             _logger.LogInformation("valid {0} grid {1}", string.Join(",",validDirections), grid[ourCurrentX-1,ourCurrentY-1].ToString());
             var nextMove = RandomMouse(validDirections);
-
             Domain.Direction myEnum = (Domain.Direction)Enum.Parse(typeof(Domain.Direction), nextMove);
 
             action = new Domain.Action()
